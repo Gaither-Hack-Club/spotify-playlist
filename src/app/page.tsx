@@ -76,6 +76,10 @@ export default function Home() {
           <p className="text-bold w-full rounded-md bg-red-500 p-4 text-center text-xl">
             Song is explicit, try again
           </p>
+        ) : status === "duplicate" ? (
+          <p className="text-bold w-full rounded-md bg-red-500 p-4 text-center text-xl">
+            Song is already in playlist
+          </p>
         ) : null}
       </div>
       <iframe

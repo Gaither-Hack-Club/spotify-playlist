@@ -23,6 +23,23 @@ export async function POST(request: Request) {
 
   const id = uri.split(/[:\"]+/)[3];
 
+  const playlistRes = await fetch(
+    `https://api.spotify.com/v1/playlists/${process.env.NEXT_PUBLIC_PLAYLIST_ID}/tracks?limit=50`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${spotify.getAccessToken()}`,
+      },
+    },
+  );
+
+  const json = await playlistRes.json();
+  const items = json.items.map((track: any) => track.id);
+
+  if (items.includes(id)) {
+    return Response.json({ status: "duplicate" });
+  }
+
   const addRes = await fetch(
     `https://api.spotify.com/v1/playlists/${process.env.NEXT_PUBLIC_PLAYLIST_ID}/tracks?uris=spotify%3Atrack%3A${id}`,
     {
