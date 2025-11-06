@@ -33,7 +33,7 @@ export async function POST(request: Request) {
   );
 
   const json = await playlistRes.json();
-  const items = json.items?.map((track: any) => track.id) ?? [];
+  const items = json.items?.map((item: any) => item.track.id) ?? [];
 
   if (items.includes(id)) {
     return Response.json({ status: "duplicate" });
